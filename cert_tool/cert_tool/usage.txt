@@ -1,0 +1,22 @@
+
+[0x01]  generate  ca cert
+	
+	$ ./cert_tool  -g ca -o ca.crt
+	$ ./cert_tool  -p  -i ca.crt
+
+
+[0x02]  generate  server cert , ca certfile will sign the server certfile
+	
+	$ ./cert_tool  -g ser -c ca.crt  -k ca.key  -o server.crt
+
+
+[0x03] encrypt file: /bin/ls   using  private_keyfile : server.key 
+	
+	$ ./cert_tool  -e  -i /bin/ls -k server.key  -o  ./ls.en.dat
+
+
+[0x04] decrypt  cipher_file using server_certfile : server.crt  and ca_certfile : ca.crt , ca_crt will verify server_crt firstly
+	
+	$ ./cert_tool  -d  -i ./ls.en.dat  -s server.crt  -c ca.crt  -o ./ls.de.bin
+
+    
